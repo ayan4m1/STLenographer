@@ -1,36 +1,26 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
+//using Stackoverflow domain as a made up example    
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("STLenographer")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("STLenographer")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
+// It is common, and mostly good, to use one GlobalAssemblyInfo.cs that is added 
+// as a link to many projects of the same product, details below
+// Change these attribute values in local assembly info to modify the information.
+[assembly: AssemblyProduct("Test")]
+[assembly: AssemblyCompany("Test")]
+[assembly: AssemblyCopyright("Copyright � Test 2024")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2d11ed56-ff65-4cef-8aaf-4fce1ec5301d")]
+[assembly: Guid("4e4f2d33-aaab-48ea-a63d-1f0a8e3c935f")]
+[assembly: ComVisible(false)] //not going to expose ;)
 
 // Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
+// roughly translated from I reckon it is for SO, note that they most likely 
+// dynamically generate this file
+//      Major Version  - Year 6 being 2016
+//      Minor Version  - The month
+//      Day Number     - Day of month
+//      Revision       - Build number
 // You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+// by using the '*' as shown below: [assembly: AssemblyVersion("year.month.day.*")]
+[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyFileVersion("1.0.0")]
