@@ -25,7 +25,8 @@ namespace STLenographer.Data
 
         public void AddTriangles(IEnumerable<Triangle> triangles)
         {
-            foreach (Triangle tri in triangles) {
+            foreach (Triangle tri in triangles)
+            {
                 AddTriangle(tri);
             }
         }

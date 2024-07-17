@@ -60,10 +60,12 @@ namespace STLenographer.Data
         }
 
         public String GetString(Encoding encoding)
-        {   if (readHelper.HasReadEverything())
+        {
+            if (readHelper.HasReadEverything())
             {
                 return encoding.GetString(readHelper.Data.ToArray());
-            } else
+            }
+            else
             {
                 throw new InvalidOperationException("Data seems to be incomplete!");
             }

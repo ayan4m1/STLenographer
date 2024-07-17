@@ -3,11 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace STLenographer.Data
-{
-    public class ByteReadHelper
-    {
-
+namespace STLenographer.Data {
+    public class ByteReadHelper {
+        
         private byte[] dataLenBytes;
         private int dataLen;
         private int dataRead;
@@ -28,17 +26,12 @@ namespace STLenographer.Data
         public int Version { get; private set; }
         private bool versionRead;
 
-        public ByteReadHelper(bool shouldDecrypt, string keyOrPassword)
-        {
-            if (shouldDecrypt)
-            {
-                if (keyOrPassword.Length == 64 && System.Text.RegularExpressions.Regex.IsMatch(keyOrPassword, @"\A\b[0-9a-fA-F]+\b\Z"))
-                {
+        public ByteReadHelper(bool shouldDecrypt, string keyOrPassword) {
+            if (shouldDecrypt) {
+                if (keyOrPassword.Length == 64 && System.Text.RegularExpressions.Regex.IsMatch(keyOrPassword, @"\A\b[0-9a-fA-F]+\b\Z")) {
                     key = ByteWriteHelper.HexStringToByteArray(keyOrPassword);
-                }
-                else
-                {
-                    PasswordDeriveBytes password = new PasswordDeriveBytes(keyOrPassword, new byte[] { 0x22, 0xf0, 0x2d, 0x47, 0x2f, 0x97, 0xee, 0xb1 }, "SHA1", 2);
+                } else {
+                    PasswordDeriveBytes password = new PasswordDeriveBytes(keyOrPassword, new byte[] { 0x22, 0xf0, 0x2d, 0x47, 0x2f, 0x97,0xee, 0xb1 }, "SHA1", 2);
                     key = password.GetBytes(256 / 8);
                 }
             }
@@ -61,60 +54,46 @@ namespace STLenographer.Data
 
         public List<byte> Data { get { return data; } }
 
-        private bool hasReadHeader()
-        {
+        private bool hasReadHeader() {
             return dataLen != -1;
         }
 
-        public bool HasReadEverything()
-        {
+        public bool HasReadEverything() {
             return hasReadHeader() && dataRead == dataLen;
         }
 
-        public bool MoveNext()
-        {
-            if (HasReadEverything())
-            {
+        public bool MoveNext() {
+            if (HasReadEverything()) {
                 return true;
             }
             currentPtr++;
-            if (currentPtr >= 8)
-            {
+            if (currentPtr >= 8) {
                 currentPtr = 0;
-                if (shouldDecrypt)
-                {
+                if (shouldDecrypt) {
                     dataUnprocessed.Add(currentByte);
                     checkChunk();
-                }
-                else
-                {
+                } else {
                     processByte(currentByte);
                 }
                 currentByte = 0;
-
+                
             }
             return HasReadEverything();
         }
 
-        private void checkChunk()
-        {
-            if (dataUnprocessed.Count >= 16)
-            {
-                if (decryptor == null)
-                {
+        private void checkChunk() {
+            if (dataUnprocessed.Count >= 16) {
+                if (decryptor == null) {
                     AesManaged aes = new AesManaged();
                     aes.Padding = PaddingMode.Zeros;
                     aes.KeySize = 256;
                     aes.Key = key;
                     aes.IV = dataUnprocessed.Take(16).ToArray();
                     decryptor = aes.CreateDecryptor();
-                }
-                else
-                {
+                } else {
                     byte[] result = new byte[16];
                     decryptor.TransformBlock(dataUnprocessed.Take(16).ToArray(), 0, 16, result, 0);
-                    foreach (byte curByte in result)
-                    {
+                    foreach(byte curByte in result) {
                         processByte(curByte);
                     }
                 }
@@ -122,46 +101,31 @@ namespace STLenographer.Data
             }
         }
 
-        private void processByte(byte curByte)
-        {
-            if (HasReadEverything())
-            {
+        private void processByte(byte curByte) {
+            if (HasReadEverything()) {
                 return;
             }
-            if (hasReadHeader())
-            {
+            if (hasReadHeader()) {
                 data.Add(curByte);
-            }
-            else
-            {
+            } else {
 
-                if (magicByteRead)
-                {
-                    if (versionRead)
-                    {
+                if (magicByteRead) {
+                    if (versionRead) {
                         dataLenBytes[dataRead] = curByte;
-                        if (dataRead == 3)
-                        {
+                        if (dataRead == 3) {
                             dataRead = 0;
                             dataLen = BitConverter.ToInt32(dataLenBytes, 0);
                             return;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Version = curByte;
                         versionRead = true;
                         return;
                     }
-                }
-                else
-                {
-                    if (curByte == 0x77 && !magicByteInvalid)
-                    {
+                } else {
+                    if (curByte == 0x77 && !magicByteInvalid) {
                         magicByteRead = true;
-                    }
-                    else
-                    {
+                    } else {
                         magicByteInvalid = true;
                     }
                     return;
@@ -170,29 +134,22 @@ namespace STLenographer.Data
             dataRead++;
         }
 
-        public void SetCurrentBit(bool bit)
-        {
+        public void SetCurrentBit(bool bit) {
             byte tmp = (byte)(1 << currentPtr);
-            if (bit)
-            {
+            if (bit) {
                 currentByte |= tmp;
-            }
-            else
-            {
-                currentByte &= (byte)~tmp;
+            } else {
+                currentByte &= (byte) ~tmp;
             }
         }
 
-        public void SetCurrentBitAndMove(bool bit)
-        {
+        public void SetCurrentBitAndMove(bool bit) {
             SetCurrentBit(bit);
             MoveNext();
         }
 
-        private void checkCapacity()
-        {
-            if (HasReadEverything())
-            {
+        private void checkCapacity() {
+            if(HasReadEverything()) {
                 throw new InvalidOperationException("Can't read more than expected data length!");
             }
         }

@@ -8,11 +8,13 @@ namespace STLenographer.Data
 {
     public class ByteWriteHelper
     {
-        private readonly List<byte> data;
+
+        private List<byte> data;
+        private bool[] currentByte;
         private int currentPtr;
         private int currentDataPtr;
         private ICryptoTransform encryptor;
-        private readonly List<byte> dataUnencrypted;
+        private List<byte> dataUnencrypted;
         private bool dataFinalized;
 
         public static byte[] HexStringToByteArray(string hex)
@@ -22,7 +24,6 @@ namespace STLenographer.Data
                       .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                       .ToArray();
         }
-
         public ByteWriteHelper(bool sholdEncrypt, string keyOrPassword)
         {
 
@@ -48,6 +49,7 @@ namespace STLenographer.Data
                 dataUnencrypted = new List<byte>();
             }
 
+            currentByte = new bool[8];
             currentDataPtr = 0;
             currentPtr = 0;
             dataFinalized = false;
