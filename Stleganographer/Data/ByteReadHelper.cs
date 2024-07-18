@@ -17,9 +17,9 @@ namespace Stleganographer.Data
         private byte currentByte;
         private int currentPtr;
 
-        private bool shouldDecrypt;
-        private byte[] key;
-        private ICryptoTransform decryptor;
+        private readonly bool shouldDecrypt = false;
+        private readonly byte[]? key;
+        private ICryptoTransform? decryptor;
 
 
         public int Version { get; private set; }

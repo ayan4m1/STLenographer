@@ -1,12 +1,10 @@
 ﻿namespace Stleganographer.Data
 {
-
     public class Vector3D : IEquatable<Vector3D>
     {
         private float _x;
         private float _y;
         private float _z;
-
 
         public Vector3D(Vector3D copy)
         {
@@ -52,7 +50,7 @@
             return $"({_x},{_y},{_z})";
         }
 
-        public bool Equals(Vector3D other)
+        public bool Equals(Vector3D? other)
         {
             if (other == null)
             {
@@ -64,16 +62,10 @@
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = X.GetHashCode();
-                hashCode = hashCode * 397 ^ Y.GetHashCode();
-                hashCode = hashCode * 397 ^ Z.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(X, Y, Z);
         }
 
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             return Equals(other as Vector3D);
         }

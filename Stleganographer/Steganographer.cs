@@ -10,7 +10,7 @@ using AsciiWriter = GenericStl.AsciiStlWriter<Stleganographer.Data.Triangle, Stl
 
 namespace Stleganographer
 {
-    public class Stenographer
+    public class Steganographer
     {
         private ReaderBase reader;
         private WriterBase writer;
@@ -51,7 +51,7 @@ namespace Stleganographer
             }
         }
 
-        public Stenographer(StlFormat inputFormat, StlFormat outputFormat)
+        public Steganographer(StlFormat inputFormat, StlFormat outputFormat)
         {
             InputFormat = inputFormat;
             OutputFormat = outputFormat;
@@ -73,7 +73,7 @@ namespace Stleganographer
                 writeHelper.AppendData(payloadBytes);
                 writeHelper.FinalizeData();
 
-                var stenographyWriter = new StenographyWriter(writeHelper);
+                var stenographyWriter = new StegaographyWriter(writeHelper);
                 stenographyWriter.AddTriangles(triangles);
 
                 if (stenographyWriter.HasUnencodedData)
@@ -98,7 +98,7 @@ namespace Stleganographer
         public string Decode(string path, string? encryptionKey)
         {
             var readHelper = new ByteReadHelper(encryptionKey == null, encryptionKey ?? "");
-            var stenographyReader = new StenographyReader(readHelper);
+            var stenographyReader = new SteganographyReader(readHelper);
 
             stenographyReader.ReadFromTriangles(reader.ReadFromFile(path));
 

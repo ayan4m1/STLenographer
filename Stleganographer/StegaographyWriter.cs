@@ -1,16 +1,18 @@
-﻿namespace Stleganographer.Data
+﻿using Stleganographer.Data;
+
+namespace Stleganographer
 {
-    class StenographyWriter
+    class StegaographyWriter
     {
-        ByteWriteHelper writeHelper;
+        readonly ByteWriteHelper writeHelper;
         readonly List<Triangle> triangles;
         readonly Dictionary<Vector3D, Vector3D> knownVertices;
 
-        public StenographyWriter(ByteWriteHelper writeHelper)
+        public StegaographyWriter(ByteWriteHelper writeHelper)
         {
             this.writeHelper = writeHelper;
-            knownVertices = new Dictionary<Vector3D, Vector3D>();
-            triangles = new List<Triangle>();
+            knownVertices = [];
+            triangles = [];
         }
 
         public List<Triangle> Triangles => triangles;
@@ -32,19 +34,19 @@
                 if (!knownVertices.ContainsKey(tri.V1))
                 {
                     Vector3D tmp = new Vector3D(tri.V1);
-                    performSteganographyPerVertex(tri.V1, writeHelper);
+                    PerformSteganographyPerVertex(tri.V1, writeHelper);
                     knownVertices.Add(tmp, new Vector3D(tri.V1));
                 }
                 if (!knownVertices.ContainsKey(tri.V2))
                 {
                     Vector3D tmp = new Vector3D(tri.V2);
-                    performSteganographyPerVertex(tri.V2, writeHelper);
+                    PerformSteganographyPerVertex(tri.V2, writeHelper);
                     knownVertices.Add(tmp, new Vector3D(tri.V2));
                 }
                 if (!knownVertices.ContainsKey(tri.V3))
                 {
                     Vector3D tmp = new Vector3D(tri.V3);
-                    performSteganographyPerVertex(tri.V3, writeHelper);
+                    PerformSteganographyPerVertex(tri.V3, writeHelper);
                     knownVertices.Add(tmp, new Vector3D(tri.V3));
                 }
             }
@@ -64,17 +66,17 @@
             triangles.Add(tri);
         }
 
-        private void performSteganographyPerVertex(Vector3D v, ByteWriteHelper writeHelper)
+        private void PerformSteganographyPerVertex(Vector3D v, ByteWriteHelper writeHelper)
         {
             if (!writeHelper.HasUnencodedData()) return;
-            v.X = performSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.X);
+            v.X = PerformSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.X);
             if (!writeHelper.HasUnencodedData()) return;
-            v.Y = performSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.Y);
+            v.Y = PerformSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.Y);
             if (!writeHelper.HasUnencodedData()) return;
-            v.Z = performSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.Z);
+            v.Z = PerformSteganographyPerFloat(writeHelper.GetAndMoveCurrentBit(), v.Z);
         }
 
-        private float performSteganographyPerFloat(bool bit, float val)
+        private float PerformSteganographyPerFloat(bool bit, float val)
         {
             byte[] bts = BitConverter.GetBytes(val);
             if (bit)

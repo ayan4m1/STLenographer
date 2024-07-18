@@ -9,10 +9,10 @@
 
         public Triangle(Vector3D v1, Vector3D v2, Vector3D v3, Vector3D normal)
         {
-            if (v1 == null) throw new ArgumentNullException("v1");
-            if (v2 == null) throw new ArgumentNullException("v2");
-            if (v3 == null) throw new ArgumentNullException("v3");
-            if (normal == null) throw new ArgumentNullException("n");
+            ArgumentNullException.ThrowIfNull(v1);
+            ArgumentNullException.ThrowIfNull(v2);
+            ArgumentNullException.ThrowIfNull(v3);
+            ArgumentNullException.ThrowIfNull(normal);
 
             _v1 = new Vector3D(v1);
             _v2 = new Vector3D(v2);
@@ -56,10 +56,10 @@
 
         public override string ToString()
         {
-            return $"V1: {_v1.ToString()}, V1: {_v2.ToString()}, V1: {_v3.ToString()}, N: {_normal.ToString()}";
+            return $"V1: {_v1}, V1: {_v2}, V1: {_v3}, N: {_normal}";
         }
 
-        public bool Equals(Triangle other)
+        public bool Equals(Triangle? other)
         {
             if (other == null)
             {
@@ -71,17 +71,10 @@
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                int hashCode = V1 != null ? V1.GetHashCode() : 0;
-                hashCode = hashCode * 397 ^ (V2 != null ? V2.GetHashCode() : 0);
-                hashCode = hashCode * 397 ^ (V3 != null ? V3.GetHashCode() : 0);
-                hashCode = hashCode * 397 ^ (N != null ? N.GetHashCode() : 0);
-                return hashCode;
-            }
+            return HashCode.Combine(V1, V2, V3, N);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as Triangle);
         }

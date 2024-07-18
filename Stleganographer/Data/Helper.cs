@@ -2,7 +2,7 @@
 
 namespace Stleganographer.Data
 {
-    class Helper
+    internal class Helper
     {
         public static Vector3D CreateVertex(float x, float y, float z)
         {
@@ -35,7 +35,7 @@ namespace Stleganographer.Data
         }
     }
 
-    class DataExtractor : IDataStructureExtractor<Triangle, Vector3D, Vector3D>
+    public class DataExtractor : IDataStructureExtractor<Triangle, Vector3D, Vector3D>
     {
         public Tuple<float, float, float> ExtractNormal(Vector3D normal)
         {
@@ -53,7 +53,7 @@ namespace Stleganographer.Data
         }
     }
 
-    class DataCreator : IDataStructureCreator<Triangle, Vector3D, Vector3D>
+    public class DataCreator : IDataStructureCreator<Triangle, Vector3D, Vector3D>
     {
         public Vector3D CreateNormal(float x, float y, float z)
         {
