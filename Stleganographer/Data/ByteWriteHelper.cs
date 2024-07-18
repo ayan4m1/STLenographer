@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
-namespace STLenographer.Data
+namespace Stleganographer.Data
 {
     public class ByteWriteHelper
     {
-
-        private List<byte> data;
-        private bool[] currentByte;
+        private readonly List<byte> data;
         private int currentPtr;
         private int currentDataPtr;
         private ICryptoTransform encryptor;
-        private List<byte> dataUnencrypted;
+        private readonly List<byte> dataUnencrypted;
         private bool dataFinalized;
 
         public static byte[] HexStringToByteArray(string hex)
@@ -24,10 +18,11 @@ namespace STLenographer.Data
                       .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                       .ToArray();
         }
+
         public ByteWriteHelper(bool sholdEncrypt, string keyOrPassword)
         {
 
-            this.data = new List<byte>();
+            data = new List<byte>();
 
             if (sholdEncrypt)
             {
@@ -35,7 +30,7 @@ namespace STLenographer.Data
                 aes.Padding = PaddingMode.Zeros;
                 aes.KeySize = 256;
                 aes.GenerateIV();
-                this.data.AddRange(aes.IV);
+                data.AddRange(aes.IV);
                 if (keyOrPassword.Length == 64 && System.Text.RegularExpressions.Regex.IsMatch(keyOrPassword, @"\A\b[0-9a-fA-F]+\b\Z"))
                 {
                     aes.Key = HexStringToByteArray(keyOrPassword);
@@ -49,7 +44,6 @@ namespace STLenographer.Data
                 dataUnencrypted = new List<byte>();
             }
 
-            currentByte = new bool[8];
             currentDataPtr = 0;
             currentPtr = 0;
             dataFinalized = false;
@@ -89,19 +83,19 @@ namespace STLenographer.Data
 
         private static int getNumberOfChunks(int num)
         {
-            return ((num + 15) / 16);
+            return (num + 15) / 16;
         }
 
 
         public bool HasUnencodedData()
         {
-            return (currentDataPtr < data.Count);
+            return currentDataPtr < data.Count;
         }
 
         public bool GetCurrentBit()
         {
             checkCapacity();
-            return (data[currentDataPtr] & (1 << currentPtr)) != 0;
+            return (data[currentDataPtr] & 1 << currentPtr) != 0;
         }
 
         public bool GetAndMoveCurrentBit()

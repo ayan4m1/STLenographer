@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace STLenographer.Data
+﻿namespace Stleganographer.Data
 {
 
     public class Vector3D : IEquatable<Vector3D>
@@ -69,8 +67,8 @@ namespace STLenographer.Data
             unchecked
             {
                 var hashCode = X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                hashCode = hashCode * 397 ^ Y.GetHashCode();
+                hashCode = hashCode * 397 ^ Z.GetHashCode();
                 return hashCode;
             }
         }

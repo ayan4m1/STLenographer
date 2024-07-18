@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
-namespace STLenographer.Data
+namespace Stleganographer.Data
 {
     public class StenographyReader
     {
@@ -12,7 +10,7 @@ namespace STLenographer.Data
         public StenographyReader(ByteReadHelper readHelper)
         {
             this.readHelper = readHelper;
-            this.knownVertices = new HashSet<Vector3D>();
+            knownVertices = new HashSet<Vector3D>();
         }
 
         public void ReadFromTriangles(IEnumerable<Triangle> triangles)
@@ -21,19 +19,19 @@ namespace STLenographer.Data
             {
                 if (!readHelper.HasReadEverything())
                 {
-                    if (!(knownVertices.Contains(tri.V1)))
+                    if (!knownVertices.Contains(tri.V1))
                     {
                         Vector3D tmp = new Vector3D(tri.V1);
                         readStenographyPerVertex(tri.V1, readHelper);
                         knownVertices.Add(tmp);
                     }
-                    if (!(knownVertices.Contains(tri.V2)))
+                    if (!knownVertices.Contains(tri.V2))
                     {
                         Vector3D tmp = new Vector3D(tri.V2);
                         readStenographyPerVertex(tri.V2, readHelper);
                         knownVertices.Add(tmp);
                     }
-                    if (!(knownVertices.Contains(tri.V3)))
+                    if (!knownVertices.Contains(tri.V3))
                     {
                         Vector3D tmp = new Vector3D(tri.V3);
                         readStenographyPerVertex(tri.V3, readHelper);
@@ -59,11 +57,13 @@ namespace STLenographer.Data
             return (bts[0] & 1) == 1;
         }
 
-        public String GetString(Encoding encoding)
-        {   if (readHelper.HasReadEverything())
+        public string GetString(Encoding encoding)
+        {
+            if (readHelper.HasReadEverything())
             {
                 return encoding.GetString(readHelper.Data.ToArray());
-            } else
+            }
+            else
             {
                 throw new InvalidOperationException("Data seems to be incomplete!");
             }

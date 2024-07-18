@@ -1,14 +1,14 @@
-﻿using STLenographer.Data;
+﻿using System.Text;
+using Stleganographer.Data;
 
-using ReaderBase = GenericStl.StlReaderBase<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using WriterBase = GenericStl.StlWriterBase<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using BinaryReader = GenericStl.BinaryStlReader<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using BinaryWriter = GenericStl.BinaryStlWriter<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using AsciiReader = GenericStl.AsciiStlReader<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using AsciiWriter = GenericStl.AsciiStlWriter<STLenographer.Data.Triangle, STLenographer.Data.Vector3D, STLenographer.Data.Vector3D>;
-using System.Text;
+using ReaderBase = GenericStl.StlReaderBase<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
+using WriterBase = GenericStl.StlWriterBase<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
+using BinaryReader = GenericStl.BinaryStlReader<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
+using BinaryWriter = GenericStl.BinaryStlWriter<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
+using AsciiReader = GenericStl.AsciiStlReader<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
+using AsciiWriter = GenericStl.AsciiStlWriter<Stleganographer.Data.Triangle, Stleganographer.Data.Vector3D, Stleganographer.Data.Vector3D>;
 
-namespace STLenographer
+namespace Stleganographer
 {
     public class Stenographer
     {
@@ -102,7 +102,7 @@ namespace STLenographer
 
             stenographyReader.ReadFromTriangles(reader.ReadFromFile(path));
 
-            return stenographyReader.GetString(System.Text.Encoding.UTF8);
+            return stenographyReader.GetString(Encoding.UTF8);
         }
     }
 }

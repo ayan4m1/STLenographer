@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace STLenographer.Data
+﻿namespace Stleganographer.Data
 {
     class StenographyWriter
     {
@@ -15,8 +9,8 @@ namespace STLenographer.Data
         public StenographyWriter(ByteWriteHelper writeHelper)
         {
             this.writeHelper = writeHelper;
-            this.knownVertices = new Dictionary<Vector3D, Vector3D>();
-            this.triangles = new List<Triangle>();
+            knownVertices = new Dictionary<Vector3D, Vector3D>();
+            triangles = new List<Triangle>();
         }
 
         public List<Triangle> Triangles => triangles;
@@ -25,7 +19,8 @@ namespace STLenographer.Data
 
         public void AddTriangles(IEnumerable<Triangle> triangles)
         {
-            foreach (Triangle tri in triangles) {
+            foreach (Triangle tri in triangles)
+            {
                 AddTriangle(tri);
             }
         }
@@ -34,19 +29,19 @@ namespace STLenographer.Data
         {
             if (writeHelper.HasUnencodedData())
             {
-                if (!(knownVertices.ContainsKey(tri.V1)))
+                if (!knownVertices.ContainsKey(tri.V1))
                 {
                     Vector3D tmp = new Vector3D(tri.V1);
                     performSteganographyPerVertex(tri.V1, writeHelper);
                     knownVertices.Add(tmp, new Vector3D(tri.V1));
                 }
-                if (!(knownVertices.ContainsKey(tri.V2)))
+                if (!knownVertices.ContainsKey(tri.V2))
                 {
                     Vector3D tmp = new Vector3D(tri.V2);
                     performSteganographyPerVertex(tri.V2, writeHelper);
                     knownVertices.Add(tmp, new Vector3D(tri.V2));
                 }
-                if (!(knownVertices.ContainsKey(tri.V3)))
+                if (!knownVertices.ContainsKey(tri.V3))
                 {
                     Vector3D tmp = new Vector3D(tri.V3);
                     performSteganographyPerVertex(tri.V3, writeHelper);

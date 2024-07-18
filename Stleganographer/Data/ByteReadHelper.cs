@@ -1,9 +1,6 @@
 ﻿using System.Security.Cryptography;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace STLenographer.Data
+namespace Stleganographer.Data
 {
     public class ByteReadHelper
     {
@@ -43,8 +40,8 @@ namespace STLenographer.Data
                 }
             }
 
-            this.dataUnprocessed = new List<byte>();
-            this.data = new List<byte>();
+            dataUnprocessed = new List<byte>();
+            data = new List<byte>();
             currentByte = 0;
             currentPtr = 0;
 

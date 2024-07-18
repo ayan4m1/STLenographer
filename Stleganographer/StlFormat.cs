@@ -1,4 +1,4 @@
-﻿namespace STLenographer
+﻿namespace Stleganographer
 {
     public enum StlFormat
     {
