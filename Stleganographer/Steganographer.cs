@@ -12,57 +12,26 @@ namespace Stleganographer
 {
     public class Steganographer
     {
-        private ReaderBase reader;
-        private WriterBase writer;
-
-        public StlFormat InputFormat
+        private static ReaderBase GetReader(StlFormat format) => format switch
         {
-            set
-            {
-                switch (value)
-                {
-                    case StlFormat.Binary:
-                        reader = new BinaryReader(new DataCreator());
-                        break;
-                    case StlFormat.ASCII:
-                        reader = new AsciiReader(new DataCreator());
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(value));
-                }
-            }
-        }
+            StlFormat.Binary => new BinaryReader(new DataCreator()),
+            StlFormat.ASCII => new AsciiReader(new DataCreator()),
+            _ => throw new ArgumentOutOfRangeException(nameof(format)),
+        };
 
-        public StlFormat OutputFormat
+        private static WriterBase GetWriter(StlFormat format) => format switch
         {
-            set
-            {
-                switch (value)
-                {
-                    case StlFormat.Binary:
-                        writer = new BinaryWriter(new DataExtractor());
-                        break;
-                    case StlFormat.ASCII:
-                        writer = new AsciiWriter(new DataExtractor());
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(value));
-                }
-            }
-        }
+            StlFormat.Binary => new BinaryWriter(new DataExtractor()),
+            StlFormat.ASCII => new AsciiWriter(new DataExtractor()),
+            _ => throw new ArgumentOutOfRangeException(nameof(format))
+        };
 
-        public Steganographer(StlFormat inputFormat, StlFormat outputFormat)
-        {
-            InputFormat = inputFormat;
-            OutputFormat = outputFormat;
-        }
-
-        public void Encode(string inputPath, string outputPath, string payload, string? encryptionKey)
+        public static void Encode(string inputPath, string outputPath, StlFormat inputFormat, StlFormat outputFormat, string payload, string? encryptionKey)
         {
             var success = false;
             var triangles = new List<Triangle>();
 
-            triangles.AddRange(reader.ReadFromFile(inputPath));
+            triangles.AddRange(GetReader(inputFormat).ReadFromFile(inputPath));
 
             while (!success)
             {
@@ -91,16 +60,16 @@ namespace Stleganographer
                     success = true;
                 }
 
-                writer.WriteToFile(outputPath, stenographyWriter.Triangles);
+                GetWriter(outputFormat).WriteToFile(outputPath, stenographyWriter.Triangles);
             }
         }
 
-        public string Decode(string path, string? encryptionKey)
+        public static string Decode(string path, StlFormat format, string? encryptionKey)
         {
             var readHelper = new ByteReadHelper(encryptionKey == null, encryptionKey ?? "");
             var stenographyReader = new SteganographyReader(readHelper);
 
-            stenographyReader.ReadFromTriangles(reader.ReadFromFile(path));
+            stenographyReader.ReadFromTriangles(GetReader(format).ReadFromFile(path));
 
             return stenographyReader.GetString(Encoding.UTF8);
         }
