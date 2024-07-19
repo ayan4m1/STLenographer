@@ -11,6 +11,8 @@
     <Version>0.1.0</Version>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/ayan4m1/STLenographer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ayan4m1/STLenographer.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
