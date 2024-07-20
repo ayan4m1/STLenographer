@@ -56,7 +56,6 @@ jobs:
         with:
           name: nuget-package
           path: ${{ env.NUGET_DIRECTORY }}
-      - uses: actions/setup-dotnet@v4
       - name: Publish NuGet package
         run: |
           foreach($file in (Get-ChildItem "${{ env.NUGET_DIRECTORY }}" -Recurse -Include *.nupkg)) {
