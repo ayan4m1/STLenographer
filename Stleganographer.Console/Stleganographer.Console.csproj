@@ -13,6 +13,10 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/ayan4m1/STLenographer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ayan4m1/STLenographer.git</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <Description>A CLI tool to embed or extract messages to/from STL files.</Description>
+    <PackageTags>3D;STL;Steganography;CLI;Utility;Tool</PackageTags>
+    <Authors>ayan4m1</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +24,7 @@
     <EmbeddedResource Remove="nupkg\**" />
     <None Remove="nupkg\**" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
