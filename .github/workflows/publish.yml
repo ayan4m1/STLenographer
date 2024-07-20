@@ -12,7 +12,7 @@ on:
 env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
-  NUGET_DIRECTORY: Stleganographer.Console/nuget
+  NUGET_DIRECTORY: ${{ github.workspace }}/Stleganographer.Console/nupkg/Stleganographer.Console*.nupkg
 
 defaults:
   run:
