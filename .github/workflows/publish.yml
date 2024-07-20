@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: nuget
+          name: nuget-package
           path: ${{ env.NUGET_DIRECTORY }}
       - uses: actions/setup-dotnet@v4
       - name: Publish NuGet package
