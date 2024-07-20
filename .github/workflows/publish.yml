@@ -5,9 +5,8 @@ on:
   push:
     branches:
       - main
-  release:
-    types:
-      - published
+    tags:
+      - v*
 
 env:
   DOTNET_NOLOGO: true
@@ -49,7 +48,7 @@ jobs:
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NUGET_DIRECTORY }}/*.nupkg")
 
   publish:
-    if: github.event_name == 'release'
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: [ validate ]
     steps:
