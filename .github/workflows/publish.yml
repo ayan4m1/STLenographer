@@ -19,7 +19,7 @@ defaults:
     shell: pwsh
 
 jobs:
-  create_nuget:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -34,9 +34,9 @@ jobs:
         if-no-files-found: error
         retention-days: 7
 
-  validate_nuget:
+  validate:
     runs-on: ubuntu-latest
-    needs: [ create_nuget ]
+    needs: [ build ]
     steps:
       - uses: actions/setup-dotnet@v4
       - uses: actions/download-artifact@v4
@@ -48,10 +48,10 @@ jobs:
       - name: Run NuGet package validator
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NUGET_DIRECTORY }}/*.nupkg")
 
-  deploy:
+  publish:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    needs: [ validate_nuget ]
+    needs: [ validate ]
     steps:
       - uses: actions/download-artifact@v4
         with:
