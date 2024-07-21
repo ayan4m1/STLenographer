@@ -22,5 +22,8 @@ namespace Stleganographer.Console
 
         [CommandOption("-p|--payload")]
         public string? EncryptionPayload { get; set; }
+
+        [CommandOption("-f|--force")]
+        public bool ForceOverwrite { get; set; }
     }
 }

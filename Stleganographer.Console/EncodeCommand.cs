@@ -18,7 +18,7 @@ namespace Stleganographer.Console
                 return 1;
             }
 
-            if (File.Exists(settings.OutputPath))
+            if (File.Exists(settings.OutputPath) && !settings.ForceOverwrite)
             {
                 AnsiConsole.MarkupLine("[red]Output path already exists![/]");
                 return 1;
