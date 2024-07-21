@@ -12,26 +12,20 @@ namespace Stleganographer.Console
 
             if (!File.Exists(settings.InputPath))
             {
-                AnsiConsole.WriteLine("[red]Input path does not exist![/]");
-                return 1;
-            }
-
-            if (!settings.InputFormat.HasValue)
-            {
-                AnsiConsole.WriteLine("[red]STL format was not supplied![/]");
+                AnsiConsole.MarkupLine("[red]Input path does not exist![/]");
                 return 1;
             }
 
             try
             {
-                var payload = Steganographer.Decode(settings.InputPath, settings.InputFormat.GetValueOrDefault(StlFormat.ASCII), settings.EncryptionKey);
+                var payload = Steganographer.Decode(settings.InputPath, settings.InputFormat, settings.EncryptionKey);
 
-                AnsiConsole.WriteLine("[underline green]Successfully decoded STL![/]");
+                AnsiConsole.MarkupLine("[underline green]Successfully decoded STL![/]");
                 AnsiConsole.WriteLine($"Payload: {payload}");
             }
             catch (Exception ex)
             {
-                AnsiConsole.WriteLine("[red]Failed to decode STL![/]");
+                AnsiConsole.MarkupLine("[red]Failed to decode STL![/]");
                 AnsiConsole.WriteException(ex);
                 return 1;
             }

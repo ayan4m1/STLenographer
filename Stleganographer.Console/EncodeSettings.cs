@@ -12,12 +12,10 @@ namespace Stleganographer.Console
         public string? OutputPath { get; set; }
 
         [CommandOption("-i|--input-format")]
-        [TypeConverter(typeof(EnumConverter<StlFormat>))]
-        public StlFormat? InputFormat { get; set; }
+        public StlFormat InputFormat { get; set; }
 
         [CommandOption("-o|--output-format")]
-        [TypeConverter(typeof(EnumConverter<StlFormat>))]
-        public StlFormat? OutputFormat { get; set; }
+        public StlFormat OutputFormat { get; set; }
 
         [CommandOption("-k|--key")]
         public string? EncryptionKey { get; set; }

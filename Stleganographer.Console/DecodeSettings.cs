@@ -9,8 +9,7 @@ namespace Stleganographer.Console
         public string? InputPath { get; set; }
 
         [CommandOption("-f|--format")]
-        [TypeConverter(typeof(EnumConverter<StlFormat>))]
-        public StlFormat? InputFormat { get; set; }
+        public StlFormat InputFormat { get; set; }
 
         [CommandOption("-k|--key")]
         public string? EncryptionKey { get; set; }
