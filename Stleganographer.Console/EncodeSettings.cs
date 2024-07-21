@@ -23,6 +23,6 @@ namespace Stleganographer.Console
         public string? EncryptionPayload { get; set; }
 
         [CommandOption("-f|--force")]
-        public bool ForceOverwrite { get; set; }
+        public bool? ForceOverwrite { get; set; }
     }
 }
